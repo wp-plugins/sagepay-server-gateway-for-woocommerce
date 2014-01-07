@@ -15,7 +15,7 @@ The Sage Pay Payment system provides a secure, simple means of authorizing credi
 The Sage Pay system provides a straightforward payment interface for the customer, and takes complete responsibility for the online transaction, including the collection and encrypted storage of credit and debit card details, eliminating the security implications of holding such sensitive information on your own servers. 
 
 So this plugin helps you to accept payments on your WooCommerce Store using SagePay Accounts.
-Send us your ideas and feedback here: http://www.patsatech.com/contact-us
+Send us your ideas and feedback here: https://www.patsatech.com/contact-us
 
 == Installation ==
 
