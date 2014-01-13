@@ -3,7 +3,7 @@ Contributors: patsatech
 Tags: ecommerce, payment gateway, wordpress, woocommerce,sagepay server,sagepay go
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 SagePay Server Gateway for accepting payments on your WooCommerce Store.
@@ -28,3 +28,6 @@ Send us your ideas and feedback here: https://www.patsatech.com/contact-us
 
 = 1.0.0 =
 * Initial Release
+
+= 1.0.1 =
+* Added support for virtual products by sending billing address in shipping fields if cart contains virtual products.

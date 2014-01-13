@@ -5,7 +5,7 @@
  * Plugin URI: http://www.patsatech.com
  * Description: WooCommerce Plugin for accepting payment through SagePay Server Gateway.
  * Author: PatSaTECH
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author URI: http://www.patsatech.com
  * Contributors: patsatech
  * Text Domain: patsatech-woo-sagepay-server
@@ -285,19 +285,38 @@ class woocommerce_sagepayserver extends WC_Payment_Gateway{
         $sd_arg['BillingPostCode'] 		= $order->billing_postcode;
         $sd_arg['BillingCountry'] 		= $order->billing_country;
         $sd_arg['BillingPhone'] 		= $order->billing_phone;
-        $sd_arg['DeliverySurname'] 		= $order->shipping_last_name;
-        $sd_arg['DeliveryFirstnames'] 	= $order->shipping_first_name;
-        $sd_arg['DeliveryAddress1'] 	= $order->shipping_address_1;
-        $sd_arg['DeliveryAddress2'] 	= $order->shipping_address_2;
-        $sd_arg['DeliveryCity'] 		= $order->shipping_city;
-		if( $order->shipping_state == 'US' ){
-        	$sd_arg['DeliveryState'] 		= $order->shipping_state;
+		
+		if( $this->cart_has_virtual_product() == true ){
+			
+	        $sd_arg['DeliverySurname'] 		= $order->billing_last_name;
+	        $sd_arg['DeliveryFirstnames'] 	= $order->billing_first_name;
+	        $sd_arg['DeliveryAddress1'] 	= $order->billing_address_1;
+	        $sd_arg['DeliveryAddress2'] 	= $order->billing_address_2;
+	        $sd_arg['DeliveryCity'] 		= $order->billing_city;
+			if( $order->billing_state == 'US' ){
+	        	$sd_arg['DeliveryState'] 		= $order->billing_state;
+			}else{
+	        	$sd_arg['DeliveryState'] 		= '';
+			}
+	        $sd_arg['DeliveryPostCode'] 	= $order->billing_postcode;
+	        $sd_arg['DeliveryCountry'] 		= $order->billing_country;	
+		
 		}else{
-        	$sd_arg['DeliveryState'] 		= '';
+			
+	        $sd_arg['DeliverySurname'] 		= $order->shipping_last_name;
+	        $sd_arg['DeliveryFirstnames'] 	= $order->shipping_first_name;
+	        $sd_arg['DeliveryAddress1'] 	= $order->shipping_address_1;
+	        $sd_arg['DeliveryAddress2'] 	= $order->shipping_address_2;
+	        $sd_arg['DeliveryCity'] 		= $order->shipping_city;
+			if( $order->shipping_state == 'US' ){
+	        	$sd_arg['DeliveryState'] 		= $order->shipping_state;
+			}else{
+	        	$sd_arg['DeliveryState'] 		= '';
+			}
+	        $sd_arg['DeliveryPostCode'] 	= $order->shipping_postcode;
+	        $sd_arg['DeliveryCountry'] 		= $order->shipping_country;	
 		}
-        $sd_arg['DeliveryPostCode'] 	= $order->shipping_postcode;
-        $sd_arg['DeliveryCountry'] 		= $order->shipping_country;
-        $sd_arg['DeliveryPhone'] 		= $order->billing_phone;
+		
         $sd_arg['Description'] 			= sprintf(__('Order #%s' , 'woothemes'), $order->id);
         $sd_arg['Currency'] 			= get_option('woocommerce_currency');
         $sd_arg['VPSProtocol'] 			= 3.00;
@@ -458,6 +477,36 @@ class woocommerce_sagepayserver extends WC_Payment_Gateway{
         echo $param_string;
         exit();
 		
+	}
+	
+	/**
+	* Check if the cart contains virtual product
+	*
+	* @return bool
+	*/
+	private function cart_has_virtual_product() {
+		global $woocommerce;
+		
+		$has_virtual_products = false;
+		
+		$virtual_products = 0;
+		
+		$products = $woocommerce->cart->get_cart();
+		
+		foreach( $products as $product ) {
+		
+			$product_id = $product['product_id'];
+			$is_virtual = get_post_meta( $product_id, '_virtual', true );
+			// Update $has_virtual_product if product is virtual
+			if( $is_virtual == 'yes' )
+			$virtual_products += 1;
+		}
+		if( count($products) == $virtual_products ){
+			$has_virtual_products = true;
+		}
+	
+		return $has_virtual_products;
+	 
 	}
 } 
 
