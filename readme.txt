@@ -31,3 +31,6 @@ Send us your ideas and feedback here: https://www.patsatech.com/contact-us
 
 = 1.0.1 =
 * Added support for virtual products by sending billing address in shipping fields if cart contains virtual products.
+
+= 1.0.2 =
+* Updated the plugin to support WooCommerce 2.3.x
