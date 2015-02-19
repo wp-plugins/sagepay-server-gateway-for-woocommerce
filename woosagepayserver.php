@@ -390,7 +390,7 @@ function init_woocommerce_sagepayserver() {
 					
 					set_transient( 'sagepay_server_next_url', $resp['NextURL'] ); 
 			        			
-					if($this->woo_version >= 2.1){
+					if($this->woo_version >= 2.1){ 
 						$redirect = $order->get_checkout_payment_url( true );			
 					}else if( $this->woo_version < 2.1 ){
 						$redirect = add_query_arg('order', $order->id, add_query_arg('key', $order->order_key, get_permalink(get_option('woocommerce_pay_page_id'))));
